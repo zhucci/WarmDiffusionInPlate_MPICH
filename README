@@ -1,0 +1,9 @@
+Compile: mpicxx -o prg fdm.c -D[GNUPLOT_ONE GNUPLOT_ITER]
+RUN local: mpirun -n 2 ./prg [Number of nodes on one side] [simulation period]
+run on cluster: 
+//Boot mpi demon on eight nodes within your cluster
+mpdboot -o --rsh=ssh -n 8 -f .8nodes
+//Send program for calculation
+mpiexec -nolocal -perhost 2 -np 4 ./prg [arguments]
+//Finalize mpi demon
+mpdallexit
