@@ -161,7 +161,7 @@ int main(int argc, char **argv) {
       //next output moment
       Tout+=dTout;
 
-#ifdef Output
+#ifdef GNUPLOT_ITER
       if(!myrank)
       plotresult(A,Out, N, myrank, total, gpipe);
     else
@@ -169,7 +169,7 @@ int main(int argc, char **argv) {
 #endif //Output
 
     }
-#ifdef FINILLY
+#ifdef GNUPLOT_ONE
     if(!myrank)
       plotresult(A,Out, N, myrank, total, gpipe);
     else
