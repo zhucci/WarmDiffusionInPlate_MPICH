@@ -37,7 +37,7 @@ int main(int argc, char **argv) {
   MPI_Comm_size (MPI_COMM_WORLD, &total);
   MPI_Comm_rank (MPI_COMM_WORLD, &myrank);
 
-  printf ("Total=%d, rank=%d\n", total, myrank);
+ 
   assert(N%total==0);
   FILE * gpipe;
   if(!myrank)
@@ -72,6 +72,7 @@ int main(int argc, char **argv) {
   A = (float_t *) malloc(sizeof(float_t)*N*n);
 
   f= myrank ? myrank*N/total-1 : 0;
+  printf("Total=%d, rank=%d line %d\n",total,myrank,f);
     // Инициализация матрицы A
     for (int i=0; i<n; i++) 
       {
@@ -207,5 +208,12 @@ void plotresult(float_t *A,float_t *Out, int N,int rank,int total, FILE* gnuplot
       printf("\n");
     }
   }
+#ifdef DEBUG
+  printf("Barrier %d\n",rank);
+#endif
   MPI_Barrier(MPI_COMM_WORLD);
+#ifdef DEBUG
+  if(!rank)
+    printf("Barrier passed\n");
+#endif
 }
